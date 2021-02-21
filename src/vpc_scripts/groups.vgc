@@ -1,0 +1,18 @@
+//-----------------------------------------------------------------------------
+//	GROUPS.VGC
+//
+//	Group Configurations for all Source(TM) Projects
+//-----------------------------------------------------------------------------
+
+///////////////////////
+// Group definitions //
+///////////////////////
+
+$Group "shaderapi"
+{
+	"bzip2"
+	"materialsystemtest"
+	"mathlib"	
+	"shaderapivk"
+	"tier1"
+}

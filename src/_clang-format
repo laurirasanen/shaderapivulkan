@@ -1,0 +1,16 @@
+﻿---
+BreakBeforeBraces: Allman
+ColumnLimit: '140'
+IndentWidth: '4'
+Language: Cpp
+PointerAlignment: Right
+TabWidth: '4'
+UseTab: Never
+IncludeCategories:
+  - Regex: '^("|<)cbase\.h("|>)'
+    Priority: -1
+  - Regex: '^<.*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 10
+...

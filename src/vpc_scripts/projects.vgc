@@ -1,0 +1,34 @@
+//-----------------------------------------------------------------------------
+//	PROJECTS.VGC
+//
+//	Project Configurations for all Source(TM) Projects
+//-----------------------------------------------------------------------------
+
+/////////////////////////
+// Project definitions //
+/////////////////////////
+
+$Project "bzip2"
+{
+	"utils\bzip2\bzip2.vpc" [$WINDOWS||$POSIX]
+}
+
+$Project "materialsystemtest"
+{
+	"unittests\materialsystemtest\materialsystemtest.vpc" [$WINDOWS||$POSIX]
+}
+
+$Project "mathlib"
+{
+	"mathlib\mathlib.vpc" [$WINDOWS||$POSIX]
+}
+
+$Project "shaderapivk"
+{
+	"materialsystem\shaderapivk\shaderapivk.vpc" [$WINDOWS||$POSIX]
+}
+
+$Project "tier1"
+{
+	"tier1\tier1.vpc" 	[$WINDOWS||$POSIX]
+}
