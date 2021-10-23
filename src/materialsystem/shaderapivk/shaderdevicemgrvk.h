@@ -10,6 +10,7 @@
 #include "hardwareconfig.h"
 #include "shaderapi/IShaderDevice.h"
 #include "shaderdevicevk.h"
+#include <vulkan/vulkan.hpp>
 
 struct MyVkAdapterInfo
 {
@@ -81,10 +82,8 @@ class CShaderDeviceMgrVk : public IShaderDeviceMgr
 #pragma endregion
 
     void CreateVkInstance();
-    void CreateVkSurface(void *hWnd);
 
     void CleanupVulkan();
-    void DestroyVkSurface();
 
     VkPhysicalDevice GetAdapter(int nIndex = -1) const;
 
@@ -99,22 +98,15 @@ class CShaderDeviceMgrVk : public IShaderDeviceMgr
 
     void ReadHardwareCaps(HardwareCaps_t &caps);
 
-    VkSurfaceKHR GetSurface();
-
     VkInstance GetInstance();
-
-    void *GetWindowHandle() { return m_hWnd; }
 
     HardwareCaps_t GetHardwareCaps(MyVkAdapterInfo adapterInfo);
 
   private:
-    void *m_hWnd;
-
     int m_nCurAdapter;
 
     ShaderDeviceInfo_t m_Mode;
     VkInstance m_hInstance;
-    VkSurfaceKHR m_hSurface;
     VkDebugUtilsMessengerEXT m_hDebugMessenger;
     CUtlVector<MyVkAdapterInfo> m_Adapters;
 };

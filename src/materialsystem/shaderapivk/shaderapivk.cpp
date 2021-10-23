@@ -877,7 +877,7 @@ void CShaderAPIVk::SetViewports(int nCount, const ShaderViewport_t *pViewports)
         // Clamp to both the back buffer and the window, if it is resizing
         int nMaxWidth = 0, nMaxHeight = 0;
         GetBackBufferDimensions(nMaxWidth, nMaxHeight);
-        if (g_pShaderDevice->IsResizing())
+        if (g_pShaderDevice->GetCurrentViewport()->IsResizing())
         {
             RECT viewRect;
             GetClientRect((HWND)g_pShaderDevice->GetCurrentViewHandle(), &viewRect);
@@ -943,12 +943,12 @@ void CShaderAPIVk::ClearBuffers(bool bClearColor, bool bClearDepth, bool bClearS
 
 void CShaderAPIVk::ClearColor3ub(unsigned char r, unsigned char g, unsigned char b)
 {
-    g_pShaderDevice->SetClearColor({r / 255.0f, g / 255.0f, b / 255.0f, 1.0f});
+    g_pShaderDevice->GetCurrentViewport()->SetClearColor({r / 255.0f, g / 255.0f, b / 255.0f, 1.0f});
 }
 
 void CShaderAPIVk::ClearColor4ub(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-    g_pShaderDevice->SetClearColor({r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f});
+    g_pShaderDevice->GetCurrentViewport()->SetClearColor({r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f});
 }
 
 void CShaderAPIVk::BindVertexShader(VertexShaderHandle_t hVertexShader) { g_pShaderManager->BindVertexShader(hVertexShader); }
@@ -968,7 +968,7 @@ bool CShaderAPIVk::SetMode(void *hWnd, int nAdapter, const ShaderDeviceInfo_t &i
 void CShaderAPIVk::ChangeVideoMode(const ShaderDeviceInfo_t &info)
 {
     int nAdapter = g_pShaderDeviceMgr->GetCurrentAdapter();
-    void *hWnd = g_pShaderDeviceMgr->GetWindowHandle();
+    void *hWnd = g_pShaderDevice->GetCurrentViewHandle();
     g_pShaderDeviceMgr->SetMode(hWnd, nAdapter, info);
 }
 
@@ -1381,7 +1381,7 @@ bool CShaderAPIVk::CanDownloadTextures() const
     if (g_pShaderDevice->IsDeactivated())
         return false;
 
-    return g_pShaderDevice->GetDevice() != VK_NULL_HANDLE;
+    return g_pShaderDevice->GetCurrentViewport() != VK_NULL_HANDLE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1845,7 +1845,7 @@ void CShaderAPIVk::ResetRenderState(bool bFullReset)
 
     // Viewport defaults to the window size
     RECT windowRect;
-    GetClientRect((HWND)g_pShaderDeviceMgr->GetWindowHandle(), &windowRect);
+    GetClientRect((HWND)g_pShaderDevice->GetCurrentViewHandle(), &windowRect);
 
     ShaderViewport_t viewport;
     viewport.Init(windowRect.left, windowRect.top, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top);

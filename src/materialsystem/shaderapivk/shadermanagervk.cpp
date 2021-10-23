@@ -149,7 +149,7 @@ void CShaderManagerVk::DestroyVertexShader(VertexShaderHandle_t hShader)
 
     auto i = (VertexShaderIndex_t)hShader;
     VkShaderModule shaderModule = m_RawVertexShaderDict[i];
-    vkDestroyShaderModule(g_pShaderDevice->GetDevice(), shaderModule, g_pAllocCallbacks);
+    vkDestroyShaderModule(g_pShaderDevice->GetVkDevice(), shaderModule, g_pAllocCallbacks);
 
     m_RawVertexShaderDict.Remove(i);
 }
@@ -174,7 +174,7 @@ void CShaderManagerVk::DestroyPixelShader(PixelShaderHandle_t hShader)
 
     auto i = (PixelShaderIndex_t)hShader;
     VkShaderModule shaderModule = m_RawPixelShaderDict[i];
-    vkDestroyShaderModule(g_pShaderDevice->GetDevice(), shaderModule, g_pAllocCallbacks);
+    vkDestroyShaderModule(g_pShaderDevice->GetVkDevice(), shaderModule, g_pAllocCallbacks);
 
     m_RawPixelShaderDict.Remove(i);
 }

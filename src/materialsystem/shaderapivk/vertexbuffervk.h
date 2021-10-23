@@ -41,7 +41,8 @@ class CVertexBufferVk : public IVertexBuffer
     virtual void ValidateData(int nVertexCount, const VertexDesc_t &desc);
 
     // constructor
-    CVertexBufferVk(ShaderBufferType_t type, VertexFormat_t fmt, int vertexCount, const char *pBudgetGroupName, bool destination);
+    CVertexBufferVk(ShaderBufferType_t type, VertexFormat_t fmt, int vertexCount, const char *pBudgetGroupName,
+                    bool destination);
     virtual ~CVertexBufferVk();
 
     // Allocates, deallocates the index buffer

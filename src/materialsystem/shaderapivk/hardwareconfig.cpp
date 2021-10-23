@@ -49,7 +49,7 @@ void CHardwareConfig::SetupHardwareCaps(const HardwareCaps_t &actualCaps)
     memcpy(&m_UnOverriddenCaps, &actualCaps, sizeof(HardwareCaps_t));
 
     // Clamp num texture stages to 2, since it's only used for fixed function
-    m_Caps.m_NumTextureStages = std::min(2, m_Caps.m_NumTextureStages);
+    m_Caps.m_NumTextureStages = min(2, m_Caps.m_NumTextureStages);
 
     // Read dxsupport.cfg which has config overrides for particular cards.
     g_pShaderDeviceMgr->ReadHardwareCaps(m_Caps);
@@ -74,7 +74,7 @@ void CHardwareConfig::SetupHardwareCaps(const HardwareCaps_t &actualCaps)
         m_Caps.m_MaxNumLights = MAX_NUM_LIGHTS - 2;
     }
 
-    m_Caps.m_MaxNumLights = std::min(m_Caps.m_MaxNumLights, (int)MAX_NUM_LIGHTS);
+    m_Caps.m_MaxNumLights = min(m_Caps.m_MaxNumLights, (int)MAX_NUM_LIGHTS);
 
     memcpy(&m_UnOverriddenCaps, &m_Caps, sizeof(HardwareCaps_t));
 }

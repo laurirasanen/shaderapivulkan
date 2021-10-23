@@ -1288,6 +1288,7 @@ void CDynamicMeshVk::Draw(int nFirstIndex, int nIndexCount)
         // Overriding with the dynamic index buffer, preserve state!
         if (m_IndexOverride && m_pIndexBuffer == g_pMeshMgr->GetDynamicIndexBuffer())
         {
+            Assert(m_pIndexBuffer);
             baseIndex = m_FirstIndex;
         }
 

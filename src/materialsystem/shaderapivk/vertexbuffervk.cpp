@@ -15,7 +15,8 @@ int CVertexBufferVk::s_nBufferCount = 0;
 //-----------------------------------------------------------------------------
 // constructor
 //-----------------------------------------------------------------------------
-CVertexBufferVk::CVertexBufferVk(ShaderBufferType_t type, VertexFormat_t fmt, int vertexCount, const char *pBudgetGroupName,
+CVertexBufferVk::CVertexBufferVk(ShaderBufferType_t type, VertexFormat_t fmt, int vertexCount,
+                                 const char *pBudgetGroupName,
                                  bool destination)
     : BaseClass()
 {
@@ -95,11 +96,11 @@ void CVertexBufferVk::Free()
         --s_nBufferCount;
 #endif
         // Destroy buffer
-        vkDestroyBuffer(g_pShaderDevice->GetDevice(), *m_pVertexBuffer, nullptr);
+        vkDestroyBuffer(g_pShaderDevice->GetVkDevice(), *m_pVertexBuffer, nullptr);
         m_pVertexBuffer = nullptr;
 
         // Free memory
-        vkFreeMemory(g_pShaderDevice->GetDevice(), *m_pVertexBufferMemory, nullptr);
+        vkFreeMemory(g_pShaderDevice->GetVkDevice(), *m_pVertexBufferMemory, nullptr);
         m_pVertexBufferMemory = nullptr;
     }
     // m_pVertexMemory.clear();
@@ -236,10 +237,10 @@ void CVertexBufferVk::Unlock(int nWrittenVertexCount, VertexDesc_t &desc)
 
         // Copy vertex data to the buffer
         void *data;
-        vkCheck(vkMapMemory(g_pShaderDevice->GetDevice(), *m_pVertexBufferMemory, 0, bufferSize, 0, &data),
+        vkCheck(vkMapMemory(g_pShaderDevice->GetVkDevice(), *m_pVertexBufferMemory, 0, bufferSize, 0, &data),
                 "failed to map vertex buffer memory!");
         memcpy(data, m_Vertices.data(), bufferSize);
-        vkUnmapMemory(g_pShaderDevice->GetDevice(), *m_pVertexBufferMemory);
+        vkUnmapMemory(g_pShaderDevice->GetVkDevice(), *m_pVertexBufferMemory);
     }
 
     m_bIsLocked = false;

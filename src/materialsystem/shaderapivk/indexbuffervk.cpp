@@ -46,7 +46,8 @@ void CIndexBufferVk::ValidateData(int nIndexCount, const IndexDesc_t &desc){
 //-----------------------------------------------------------------------------
 // Constructor, destructor
 //-----------------------------------------------------------------------------
-CIndexBufferVk::CIndexBufferVk(ShaderBufferType_t bufferType, MaterialIndexFormat_t fmt, int indexCount, const char *pBudgetGroupName,
+CIndexBufferVk::CIndexBufferVk(ShaderBufferType_t bufferType, MaterialIndexFormat_t fmt, int indexCount,
+                               const char *pBudgetGroupName,
                                bool destination)
     : BaseClass()
 {
@@ -137,11 +138,11 @@ void CIndexBufferVk::Free()
 #endif
 
         // Destroy buffer
-        vkDestroyBuffer(g_pShaderDevice->GetDevice(), *m_pIndexBuffer, nullptr);
+        vkDestroyBuffer(g_pShaderDevice->GetVkDevice(), *m_pIndexBuffer, nullptr);
         m_pIndexBuffer = nullptr;
 
         // Free memory
-        vkFreeMemory(g_pShaderDevice->GetDevice(), *m_pIndexBufferMemory, nullptr);
+        vkFreeMemory(g_pShaderDevice->GetVkDevice(), *m_pIndexBufferMemory, nullptr);
         m_pIndexBufferMemory = nullptr;
 
         if (!m_bIsDynamic)
@@ -296,10 +297,10 @@ void CIndexBufferVk::Unlock(int nWrittenIndexCount, IndexDesc_t &desc)
 
         // Copy index data to the buffer
         void *data;
-        vkCheck(vkMapMemory(g_pShaderDevice->GetDevice(), *m_pIndexBufferMemory, 0, bufferSize, 0, &data),
+        vkCheck(vkMapMemory(g_pShaderDevice->GetVkDevice(), *m_pIndexBufferMemory, 0, bufferSize, 0, &data),
                 "failed to map index buffer memory!");
         memcpy(data, m_Indices.data(), (size_t)bufferSize);
-        vkUnmapMemory(g_pShaderDevice->GetDevice(), *m_pIndexBufferMemory);
+        vkUnmapMemory(g_pShaderDevice->GetVkDevice(), *m_pIndexBufferMemory);
     }
 
     m_bIsLocked = false;

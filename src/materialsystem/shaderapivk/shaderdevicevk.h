@@ -7,57 +7,24 @@
 #pragma once
 #endif
 
-#include "indexbuffervk.h"
-#include "meshvk.h"
 #include "shaderapi/IShaderDevice.h"
 #include "shaderdevicemgrvk.h"
-#include "vertexbuffervk.h"
-
-struct MyVkAdapterInfo;
+#include "viewportvk.h"
 
 class CShaderDeviceVk : public IShaderDevice
 {
-    ImageFormat _backBufferFormat;
-    int _backBufferSize[2];
-
-    struct MeshOffset
-    {
-        int vertexCount;
-        int indexCount;
-        int firstVertex;
-        int firstIndex;
-        VkPrimitiveTopology topology;
-        UniformBufferObject ubo;
-    };
-
   public:
     CShaderDeviceVk();
     ~CShaderDeviceVk();
 
-    VkExtent2D CShaderDeviceVk::ChooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
-    void InitDevice(MyVkAdapterInfo &adapterInfo, const ShaderDeviceInfo_t &creationInfo);
-    void CleanupSwapchain();
-    void RecreateSwapchain();
-    void CreateSwapchain();
-    void CreateImageViews();
-    void CreateRenderPass();
-    void CreateDescriptorSetlayout();
-    void CreateDescriptorSets();
-    void CreateDescriptorPool();
-    void CreateGraphicsPipeline();
-    VkShaderModule CreateShaderModule(const uint32_t *code, const size_t size);
-    void CreateFramebuffers();
-    void CreateCommandPool();
-    void CreateUniformBuffers();
-    void CreateCommandBuffers();
-    void CreateSyncObjects();
+    void InitDevice(VkPhysicalDevice physicalDevice);
 
-    void GetMatrices(VMatrix *view, VMatrix *proj, VMatrix *model);
-    UniformBufferObject GetUniformBufferObject();
-    void UpdateUniformBuffer(uint32_t currentImage);
-
-    // Update command buffer with all meshes that want to be drawn
-    void UpdateCommandBuffer(uint32_t currentImage);
+    CViewportVk *GetCurrentViewport();
+    void *GetCurrentViewHandle();
+    VkDevice GetVkDevice() const { return m_Device; }
+    VkQueue GetPresentQueue() const { return m_PresentQueue; }
+    VkQueue GetGraphicsQueue() const { return m_GraphicsQueue; }
+    size_t GetUBOAlignment() const { return m_DynamicUBOAlignment; }
 
     // Releases/reloads resources when other apps want some memory
     void ReleaseResources() override;
@@ -97,7 +64,10 @@ class CShaderDeviceVk : public IShaderDevice
     void RemoveView(void *hWnd) override;
 
     // Activates a view
+    int FindView(void *hWnd);
     void SetView(void *hWnd) override;
+
+    VkShaderModule CreateShaderModule(const uint32_t *code, const size_t size);
 
     // Shader compilation
     IShaderBuffer *CompileShader(const char *pProgram, size_t nBufLen, const char *pShaderVersion) override;
@@ -139,72 +109,19 @@ class CShaderDeviceVk : public IShaderDevice
 
     void ShutdownDevice();
     bool IsDeactivated() const;
-
-    VkDevice GetDevice();
+    bool IsInitialized() const { return m_bInitialized; }
 
     void DrawMesh(CBaseMeshVk *pMesh);
 
-    void CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize srcOffset, VkDeviceSize dstOffset, VkDeviceSize size);
-
-    void SetClearColor(VkClearValue color) { m_ClearColor = color; }
-
-    void *GetCurrentViewHandle() { return m_ViewHWnd; }
-
-    bool IsResizing() { return m_bIsResizing; }
-
   private:
+    VkPhysicalDevice m_PhysicalDevice;
     VkDevice m_Device;
     VkQueue m_GraphicsQueue;
     VkQueue m_PresentQueue;
-
-    VkSwapchainKHR m_Swapchain;
-    std::vector<VkImage> m_SwapchainImages;
-    VkFormat m_SwapchainImageFormat;
-    std::vector<VkImageView> m_SwapchainImageViews;
-    VkExtent2D m_SwapchainExtent;
-
-    VkShaderModule m_VertShaderModule;
-    VkShaderModule m_FragShaderModule;
-
-    VkRenderPass m_RenderPass;
-    VkDescriptorSetLayout m_DescriptorSetLayout;
-    VkDescriptorPool m_DescriptorPool;
-    std::vector<VkDescriptorSet> m_DescriptorSets;
-    VkPipelineLayout m_PipelineLayout;
-    VkPipeline m_GraphicsPipeline;
-
-    std::vector<VkFramebuffer> m_SwapchainFramebuffers;
-    std::vector<VkBuffer> m_UniformBuffers;
-    std::vector<VkDeviceMemory> m_UniformBuffersMemory;
-
-    VkCommandPool m_CommandPool;
-    std::vector<VkCommandBuffer> m_CommandBuffers;
-
-    std::vector<VkSemaphore> m_ImageAvailableSemaphores;
-    std::vector<VkSemaphore> m_RenderFinishedSemaphores;
-    std::vector<VkFence> m_InFlightFences;
-    size_t m_iCurrentFrame = 0;
-
-    CVertexBufferVk *m_pVertexBuffer;
-    CIndexBufferVk *m_pIndexBuffer;
-    VkDeviceSize m_VertexBufferOffset;
-    VkDeviceSize m_IndexBufferOffset;
-
-    VkClearValue m_ClearColor = {0.0f, 0.0f, 0.0f, 1.0f};
-
-    std::vector<MeshOffset> m_DrawMeshes;
+    std::vector<CViewportVk *> m_Viewports;
+    int m_CurrentViewport = -1;
+    bool m_bInitialized = false;
     size_t m_DynamicUBOAlignment;
-
-    // VK_TODO: detect window resize and modify this
-    bool m_bFrameBufferResized = false;
-
-    bool m_bIsMinimized : 1;
-    // The current view hwnd
-    void *m_ViewHWnd;
-    int m_nWindowWidth;
-    int m_nWindowHeight;
-
-    bool m_bIsResizing;
 };
 
 extern CShaderDeviceVk *g_pShaderDevice;

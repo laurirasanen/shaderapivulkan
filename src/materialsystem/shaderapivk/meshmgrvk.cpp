@@ -50,8 +50,8 @@ void CMeshMgrVk::Init()
 
     // VK_TODO: is this needed? already initialized in constructor..
     // The dynamic index buffer
-    // m_pDynamicIndexBuffer = (CIndexBufferVk *)g_pShaderDevice->CreateIndexBuffer(
-    //    SHADER_BUFFER_TYPE_DYNAMIC, MATERIAL_INDEX_FORMAT_UNKNOWN, INDEX_BUFFER_SIZE, "dynamic");
+    m_pDynamicIndexBuffer = (CIndexBufferVk *)g_pShaderDevice->CreateIndexBuffer(SHADER_BUFFER_TYPE_DYNAMIC, MATERIAL_INDEX_FORMAT_UNKNOWN,
+                                                                                 INDEX_BUFFER_SIZE, "dynamic");
 
     // If we're running in vs3.0, allocate a vertexID buffer
     CreateVertexIDBuffer();
@@ -386,6 +386,7 @@ IMesh *CMeshMgrVk::GetDynamicMesh(IMaterial *pMaterial, VertexFormat_t vertexFor
         CBaseMeshVk *pBaseIndex = static_cast<CBaseMeshVk *>(pIndexOverride);
         if (pBaseIndex)
         {
+            Assert(pBaseIndex->GetIndexBuffer());
             m_DynamicMesh.OverrideIndexBuffer(pBaseIndex->GetIndexBuffer());
         }
     }
