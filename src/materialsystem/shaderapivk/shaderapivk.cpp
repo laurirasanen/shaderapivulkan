@@ -173,9 +173,7 @@ int CShaderAPIVk::CompareSnapshots(StateSnapshot_t snapshot0, StateSnapshot_t sn
 
 IMesh *CShaderAPIVk::GetFlexMesh()
 {
-    Assert(0);
-
-
+    return g_pMeshMgr->GetFlexMesh();
 }
 
 void CShaderAPIVk::SetFlashlightStateEx(const FlashlightState_t &state, const VMatrix &worldToTexture, ITexture *pFlashlightDepthTexture) {}
