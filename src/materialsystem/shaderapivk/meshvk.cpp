@@ -561,6 +561,9 @@ void CMeshVk::UnlockMesh(int nVertexCount, int nIndexCount, MeshDesc_t &desc)
 //-----------------------------------------------------------------------------
 void CMeshVk::ModifyBeginEx(bool bReadOnly, int nFirstVertex, int nVertexCount, int nFirstIndex, int nIndexCount, MeshDesc_t &desc)
 {
+    m_pVertexBuffer->Lock(nVertexCount, false, *static_cast<VertexDesc_t *>(&desc));
+    ComputeVertexDesc(m_pVertexBuffer->GetVertexMemory(), m_VertexFormat, desc);
+    m_IsVBLocked = true;
     desc.m_nFirstVertex = nFirstVertex;
 }
 
@@ -569,7 +572,11 @@ void CMeshVk::ModifyBegin(int nFirstVertex, int nVertexCount, int nFirstIndex, i
     ModifyBeginEx(false, nFirstVertex, nVertexCount, nFirstIndex, nIndexCount, desc);
 }
 
-void CMeshVk::ModifyEnd(MeshDesc_t &desc) {}
+void CMeshVk::ModifyEnd(MeshDesc_t &desc)
+{
+    Unlock(0, *static_cast<IndexDesc_t *>(&desc));
+    Unlock(0, *static_cast<VertexDesc_t *>(&desc));
+}
 
 //-----------------------------------------------------------------------------
 // returns the # of vertices (static meshes only)
