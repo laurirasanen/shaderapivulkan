@@ -42,6 +42,8 @@ $Configuration
 		$PreprocessorDefinitions			"$BASE;PLATFORM_64BITS;WIN64;_WIN64;COMPILER_MSVC64" [$WIN64]
 		$PreprocessorDefinitions			"$BASE;COMPILER_MSVC32" [$WIN32]
 
+		$PreprocessorDefinitions			"$BASE;TF" [$TF]
+
 		// /Gw is a VS 2013 option that puts global and static variables in individual sections so that the
 		// linker can discard unreferenced data. When building @client /dota with linker optimizations this
 		// reduces the client.dll size by about 1.14%. When linker optimizations are disabled this has no

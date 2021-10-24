@@ -171,7 +171,12 @@ void CShaderAPIVk::DisableAllLocalLights() {}
 
 int CShaderAPIVk::CompareSnapshots(StateSnapshot_t snapshot0, StateSnapshot_t snapshot1) { return 0; }
 
-IMesh *CShaderAPIVk::GetFlexMesh() { return nullptr; }
+IMesh *CShaderAPIVk::GetFlexMesh()
+{
+    Assert(0);
+
+
+}
 
 void CShaderAPIVk::SetFlashlightStateEx(const FlashlightState_t &state, const VMatrix &worldToTexture, ITexture *pFlashlightDepthTexture) {}
 

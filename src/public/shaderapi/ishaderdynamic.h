@@ -15,7 +15,11 @@
 
 #include "shaderapi/shareddefs.h"
 #include "materialsystem/imaterial.h"
+#ifdef TF
+#include "materialsystem/imaterialsystem_81.h"
+#else
 #include "materialsystem/imaterialsystem.h"
+#endif
 #include "tier0/basetypes.h"
 
 

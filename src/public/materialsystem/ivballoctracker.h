@@ -7,7 +7,11 @@
 #ifndef IVBALLOCTRACKER_H
 #define IVBALLOCTRACKER_H
 
+#ifdef TF
+#include "materialsystem/imaterialsystem_81.h"
+#else
 #include "materialsystem/imaterialsystem.h"
+#endif
 
 // By default, only enable this alloc tracking for a debug shaderapidx*.dll
 // (it uses about 0.25MB to track ~7000 allocations)

@@ -16,7 +16,11 @@
 #include "materialsystem/IMaterialSystemHardwareConfig.h"
 //#include "IHardwareConfigInternal.h"
 #include "bitmap/imageformat.h"
+#ifdef TF
+#include "materialsystem/imaterialsystem_81.h"
+#else
 #include "materialsystem/imaterialsystem.h"
+#endif
 
 //-----------------------------------------------------------------------------
 // Forward declarations
