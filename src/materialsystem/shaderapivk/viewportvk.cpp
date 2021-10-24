@@ -636,6 +636,16 @@ void CViewportVk::CreateSyncObjects()
 
 void CViewportVk::GetMatrices(VMatrix *view, VMatrix *proj, VMatrix *model)
 {
+    if (!g_pMaterialSystem)
+    {
+        // MaterialSystem isn't loaded on game launch in TF2
+        // when startup graphic gets drawn.
+        view->Identity();
+        proj->Identity();
+        model->Identity();
+        return;
+    }
+
     IMatRenderContext *renderContext = g_pMaterialSystem->GetRenderContext();
     renderContext->GetMatrix(MATERIAL_VIEW, view);
     renderContext->GetMatrix(MATERIAL_PROJECTION, proj);
