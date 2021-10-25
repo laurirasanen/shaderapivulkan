@@ -17,8 +17,8 @@
 //-----------------------------------------------------------------------------
 const int MAX_FRAMES_IN_FLIGHT = 2;
 const uint64_t MAX_MESHES = 1024; // VK_TODO: find a way to remove these
-const uint64_t MAX_VERTICES = 65535 * 8;
-const uint64_t MAX_INDICES = 65535 * 8;
+const uint64_t MAX_VERTICES = 65535 * 64;
+const uint64_t MAX_INDICES = 65535 * 64;
 
 CViewportVk::CViewportVk()
 {
@@ -746,6 +746,7 @@ void CViewportVk::UpdateCommandBuffer(uint32_t currentImage)
             VULKAN_HPP_DEFAULT_DISPATCHER.vkCmdSetPrimitiveTopologyEXT(m_CommandBuffers[currentImage], m_DrawMeshes[i].topology);
 
             // draw
+            Assert(m_DrawMeshes[i].firstIndex + m_DrawMeshes[i].indexCount <= m_pIndexBuffer->IndexCount());
             vkCmdDrawIndexed(m_CommandBuffers[currentImage], m_DrawMeshes[i].indexCount, 1, m_DrawMeshes[i].firstIndex,
                              m_DrawMeshes[i].firstVertex, 0);
         }
@@ -950,7 +951,9 @@ void CViewportVk::DrawMesh(CBaseMeshVk *pMesh)
     VkDeviceSize indexRegionSize = indexCount * indexBuffer->IndexSize();
 
     // Copy mesh buffers to optimal destination buffers
+    Assert(m_pVertexBuffer->GetBufferSize() >= m_VertexBufferOffset + vertexRegionSize);
     CopyBuffer(*vertexBuffer->GetVkBuffer(), *m_pVertexBuffer->GetVkBuffer(), 0, m_VertexBufferOffset, vertexRegionSize);
+    Assert(m_pIndexBuffer->GetBufferSize() >= m_IndexBufferOffset + indexRegionSize);
     CopyBuffer(*indexBuffer->GetVkBuffer(), *m_pIndexBuffer->GetVkBuffer(), 0, m_IndexBufferOffset, indexRegionSize);
 
     // Store current byte offsets for copying into buffers

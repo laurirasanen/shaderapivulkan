@@ -77,6 +77,8 @@ class CVertexBufferVk : public IVertexBuffer
 
     unsigned char *GetVertexMemory() { return (unsigned char *)m_pVertexMemory.data(); }
 
+    VkDeviceSize GetBufferSize() { return m_nBufferSize; }
+
   protected:
     VkBuffer *m_pVertexBuffer;
     VertexFormat_t m_VertexFormat;

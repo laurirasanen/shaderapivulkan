@@ -94,16 +94,15 @@ void CMeshMgrVk::CleanUp()
 void CMeshMgrVk::FillVertexIDBuffer(CVertexBufferVk *pVertexIDBuffer, int nCount)
 {
     // Fill the buffer with the values 0->(nCount-1)
-    // VK_TODO
-    /*
-    int nBaseVertexIndex = 0;
-    float *pBuffer = (float *)pVertexIDBuffer->Lock(nCount, nBaseVertexIndex);
+    VertexDesc_t desc;
+    ComputeVertexDesc(nullptr, pVertexIDBuffer->GetVertexFormat(), desc);
+    pVertexIDBuffer->Lock(nCount, false, desc);
+    float *pBuffer = (float*)pVertexIDBuffer->GetVertexMemory();
     for (int i = 0; i < nCount; ++i)
     {
         *pBuffer++ = (float)i;
     }
-    pVertexIDBuffer->Unlock(nCount);
-    */
+    pVertexIDBuffer->Unlock(nCount, desc);
 }
 
 //-----------------------------------------------------------------------------
@@ -250,18 +249,15 @@ void CMeshMgrVk::CopyStaticMeshIndexBufferToTempMeshIndexBuffer(CTempMeshVk *pDs
     CMeshBuilder dstMeshBuilder;
     dstMeshBuilder.Begin(pDstIndexMesh, pSrcIndexMesh->GetPrimitiveType(), 0, nIndexCount);
     CIndexBufferVk *srcIndexBuffer = pSrcIndexMesh->GetIndexBuffer();
-    int dummy = 0;
-    // VK_TODO
-    /*
-    uint16_t *srcIndexArray = srcIndexBuffer->Lock(false, nIndexCount, dummy, 0);
-    int i;
-    for (i = 0; i < nIndexCount; i++)
+    IndexDesc_t temp;
+    srcIndexBuffer->Lock(nIndexCount, false, temp);
+    uint16_t *srcIndexArray = srcIndexBuffer->GetIndexMemory();
+    for (int i = 0; i < nIndexCount; i++)
     {
         dstMeshBuilder.Index(srcIndexArray[i]);
         dstMeshBuilder.AdvanceIndex();
     }
-    srcIndexBuffer->Unlock(0);
-    */
+    srcIndexBuffer->Unlock(0, temp);
     dstMeshBuilder.End();
 }
 

@@ -49,6 +49,10 @@ class CIndexBufferVk : public IIndexBuffer
 
     bool HasEnoughRoom(int indexCount) const { return indexCount <= GetRoomRemaining(); }
 
+    uint16_t* GetIndexMemory() { return m_Indices.data(); }
+
+    VkDeviceSize GetBufferSize() { return m_nBufferSize; }
+
   private:
     VkBuffer *m_pIndexBuffer;
     VkDeviceMemory *m_pIndexBufferMemory;
@@ -56,7 +60,7 @@ class CIndexBufferVk : public IIndexBuffer
     MaterialIndexFormat_t m_IndexFormat;
     std::vector<uint16_t> m_pIndices;
     int m_nIndexCount;
-    int m_nBufferSize;
+    VkDeviceSize m_nBufferSize;
     int m_nFirstUnwrittenOffset;
 
     // Is it locked?

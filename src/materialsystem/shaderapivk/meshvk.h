@@ -739,6 +739,13 @@ inline void ComputeVertexDesc(unsigned char *pBuffer, VertexFormat_t vertexForma
     }
     desc.m_ActualVertexSize = offset;
 
+    // HACK HACK:
+    // Avoid division by 0 errors if this gets called with VERTEX_FORMAT_UNKNOWN
+    if (desc.m_ActualVertexSize == 0)
+    {
+        desc.m_ActualVertexSize = 1;
+    }
+
     // Now set the m_VertexSize for all the members that were actually valid.
     Assert(nVertexSizesToSet < sizeof(pVertexSizesToSet) / sizeof(pVertexSizesToSet[0]));
     for (int iElement = 0; iElement < nVertexSizesToSet; iElement++)
