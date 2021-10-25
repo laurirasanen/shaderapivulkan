@@ -148,7 +148,7 @@ bool CShaderDeviceMgrVk::Connect(CreateInterfaceFn factory)
 
     s_TempFactory = nullptr;
 
-    if (!g_pShaderUtil || !g_pFullFileSystem || !g_pShaderDeviceMgr)
+    if (!g_pShaderUtil || !g_pFullFileSystem || !g_pShaderDeviceMgr || !g_pMaterialSystem)
     {
         Warning("ShaderAPIVk was unable to access the required interfaces!\n");
         return false;
