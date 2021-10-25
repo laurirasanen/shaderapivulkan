@@ -20,7 +20,8 @@ $Project "materialsystemtest"
 
 $Project "mathlib"
 {
-	"mathlib\mathlib.vpc" [$WINDOWS||$POSIX]
+	"sdk2013\mathlib\mathlib.vpc" [$WINDOWS||$POSIX && !$TF]
+	"tf\mathlib\mathlib.vpc" [($WINDOWS||$POSIX) && $TF]
 }
 
 $Project "shaderapivk"

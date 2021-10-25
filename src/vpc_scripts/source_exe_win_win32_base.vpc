@@ -10,9 +10,12 @@ $MacroRequired				"SRCDIR"
 $MacroRequired				"OUTBINNAME"	"$PROJECTNAME"
 $MacroRequired				"OUTBINDIR"
 
+$Macro BRANCH		"sdk2013"
+$Macro BRANCH		"tf" [$TF]
+
 $Macro OUTBINDIR	"$OUTBINDIR$PLATSUBDIR"
-$Macro LIBPUBLIC	"$SRCDIR\lib\public$PLATSUBDIR"
-$Macro LIBCOMMON	"$SRCDIR\lib\common$PLATSUBDIR"
+$Macro LIBPUBLIC	"$SRCDIR\$BRANCH\lib\public$PLATSUBDIR"
+$Macro LIBCOMMON	"$SRCDIR\$BRANCH\lib\common$PLATSUBDIR"
 
 $Include "$SRCDIR\vpc_scripts\loadaddress.vpc"
 $Include "$SRCDIR\vpc_scripts\source_exe_win_win32_debug.vpc"
@@ -53,7 +56,7 @@ $Configuration
 		// Suppress this pointless warning using the undocumented /ignore linker switch
 		// schemalib.lib(schemaclassinfo.obj) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 		$AdditionalOptions					"$BASE /ignore:4221"
-		$AdditionalOptions					"$BASE $SRCDIR\lib\public\ftol3.obj" [$VS2013 && $WIN32 && !$DISABLE_FTOL3_OVERRIDE && !$SOURCESDK] // Work around CRT bug https://connect.microsoft.com/VisualStudio/feedback/details/806362/vc12-pollutes-the-floating-point-stack-when-casting-infinity-nan-to-unsigned-long#
+		$AdditionalOptions					"$BASE $LIBPUBLIC\ftol3.obj" [$VS2013 && $WIN32 && !$DISABLE_FTOL3_OVERRIDE && !$SOURCESDK] // Work around CRT bug https://connect.microsoft.com/VisualStudio/feedback/details/806362/vc12-pollutes-the-floating-point-stack-when-casting-infinity-nan-to-unsigned-long#
 	}
 	
 	$PreBuildEvent
@@ -90,7 +93,7 @@ $Project
 {
 	$Folder	"Source Files"
 	{
-		$File	"$SRCDIR\public\tier0\memoverride.cpp"
+		$File	"$SRCDIR\$BRANCH\public\tier0\memoverride.cpp"
 		{
 			$Configuration
 			{
@@ -103,7 +106,7 @@ $Project
 
 		// Implement __imp__EncodePointer and __imp__DecodePointer so that we can run on XP SP1
 		// when building with VS 2010 and higher.
-		$File	"$SRCDIR\public\tier0\pointeroverride.asm" [$WIN32]
+		$File	"$SRCDIR\$BRANCH\public\tier0\pointeroverride.asm" [$WIN32]
 		{
 			$Configuration
 			{	

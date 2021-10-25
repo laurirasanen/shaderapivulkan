@@ -9,11 +9,7 @@
 #include "FileSystem.h"
 #include "appframework/tier2app.h"
 #include "filesystem_init.h"
-#ifdef TF
-#include "materialsystem/imaterialsystem_81.h"
-#else
 #include "materialsystem/imaterialsystem.h"
-#endif
 #include "materialsystem/imesh.h"
 #include "materialsystem/materialsystem_config.h"
 #include "materialsystem/materialsystemutil.h"

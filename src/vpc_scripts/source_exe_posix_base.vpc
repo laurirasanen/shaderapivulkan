@@ -45,7 +45,7 @@ $Project
 {
 	$Folder	"Source Files"
 	{
-		$File	"$SRCDIR\public\tier0\memoverride.cpp"
+		$File	"$SRCDIR\$BRANCH\public\tier0\memoverride.cpp"
 		{
 			$Configuration
 			{

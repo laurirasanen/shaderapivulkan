@@ -312,6 +312,10 @@ bool CHardwareConfig::SupportsHDRMode(HDRType_t nHDRType) const
     return false;
 }
 
+#ifdef TF
+bool CHardwareConfig::CanStretchRectFromTextures(void) const { return false; }
+#endif
+
 bool CHardwareConfig::HasProjectedBumpEnv() const { return m_Caps.m_HasProjectedBumpEnv; }
 
 bool CHardwareConfig::SupportsSpheremapping() const { return m_Caps.m_bSupportsSpheremapping; }

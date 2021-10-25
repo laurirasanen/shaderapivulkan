@@ -15,6 +15,9 @@
 // rel/tf_beta branch:
 //$Conditional TF_BETA	"1"
 
+$Macro BRANCH		"sdk2013"
+$Macro BRANCH		"tf" [$TF]
+
 $Configuration "Debug"
 {
 	$Compiler

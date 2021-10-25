@@ -704,6 +704,14 @@ class CShaderAPIVk : public IShaderAPI, public IDebugTextureInfo
     // Gets at a particular transform
     glm::mat4x4 GetTransform(int i) { return m_MatrixStack[i].GetTop(); }
 
+#ifdef TF
+    void TexLodClamp(int finest) override;
+
+    void TexLodBias(float bias) override;
+
+    void CopyTextureToTexture( ShaderAPITextureHandle_t srcTex, ShaderAPITextureHandle_t dstTex ) override;
+#endif
+
   private:
     ShaderAPITextureHandle_t m_hFullScreenTexture;
     ShaderAPITextureHandle_t m_hLinearToGammaTableTexture;

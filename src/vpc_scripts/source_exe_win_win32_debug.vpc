@@ -55,7 +55,7 @@ $Configuration "Debug"
 	$Compiler
 	{
 		// General
-		$AdditionalIncludeDirectories			"$SRCDIR\common;$SRCDIR\public;$SRCDIR\public\tier0;$SRCDIR\public\tier1"
+		$AdditionalIncludeDirectories			"$SRCDIR\common;$SRCDIR\$BRANCH\public;$SRCDIR\$BRANCH\public\tier0;$SRCDIR\$BRANCH\public\tier1;$SRCDIR\$BRANCH\thirdparty"
 		$Resolve#UsingReferences
 		$DebugInformationFormat					"Program Database for Edit & Continue (/ZI)" [$WIN32]
 		$DebugInformationFormat					"Program Database (/Zi)" [$WIN64]
@@ -246,7 +246,7 @@ $Configuration "Debug"
 		$UseFAT32WorkAround
 
 		// Input And Output
-		$AdditionalManifestFiles			"$SRCDIR\public\windows_default.manifest" [!$SOURCESDK]
+		$AdditionalManifestFiles			"$SRCDIR\$BRANCH\public\windows_default.manifest" [!$SOURCESDK]
 		$InputResourceManifests
 		$EmbedManifest
 		$OutputManifestFile

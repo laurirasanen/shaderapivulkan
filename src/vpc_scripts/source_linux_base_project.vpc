@@ -2,8 +2,11 @@
 $Include "$SRCDIR\vpc_scripts\version.vpc"
 $Macro PLATSUBDIR	"\linux32"	[$LINUX32]
 
-$Macro LIBPUBLIC	"$SRCDIR\lib\public$PLATSUBDIR"
-$Macro LIBCOMMON	"$SRCDIR\lib\common$PLATSUBDIR"
+$Macro BRANCH		"sdk2013"
+$Macro BRANCH		"tf" [$TF]
+
+$Macro LIBPUBLIC	"$SRCDIR\$BRANCH\lib\public$PLATSUBDIR"
+$Macro LIBCOMMON	"$SRCDIR\$BRANCH\lib\common$PLATSUBDIR"
 
 $MacroRequired				"SRCDIR"
 
@@ -38,7 +41,7 @@ $Configuration
 
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	"$SRCDIR\common;$SRCDIR\public;$SRCDIR\public\tier0;$SRCDIR\public\tier1"
+		$AdditionalIncludeDirectories	"$SRCDIR\common;$SRCDIR\$BRANCH\public;$SRCDIR\$BRANCH\public\tier0;$SRCDIR\$BRANCH\public\tier1"
 		$PreprocessorDefinitions		"$BASE;GNUC;POSIX;COMPILER_GCC;MEMOVERRIDE_MODULE=$PROJECTNAME;_DLL_EXT=$_DLL_EXT"
 		$PreprocessorDefinitions		"$BASE;DEDICATED" [$DEDICATED]
 		$PreprocessorDefinitions		"$BASE;_LINUX;LINUX"		[$LINUXALL]

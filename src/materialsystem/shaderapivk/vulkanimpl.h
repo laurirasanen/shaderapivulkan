@@ -7,11 +7,7 @@
 #pragma once
 #endif
 
-#ifdef TF
-#include "materialsystem/imaterialsystem_81.h"
-#else
 #include "materialsystem/imaterialsystem.h"
-#endif
 #include "dbg.h"
 
 // VK_TODO: Make this the correct platform define

@@ -632,6 +632,14 @@ void CShaderAPIVk::MarkAllUserClipPlanesDirty()
     m_DynamicState.m_bFastClipPlaneChanged = true;
 }
 
+#ifdef TF
+void CShaderAPIVk::TexLodClamp(int finest) {}
+
+void CShaderAPIVk::TexLodBias(float bias) {}
+
+void CShaderAPIVk::CopyTextureToTexture(ShaderAPITextureHandle_t srcTex, ShaderAPITextureHandle_t dstTex) {}
+#endif
+
 void CShaderAPIVk::SetTextureTransformDimension(TextureStage_t textureStage, int dimension, bool projected) {}
 
 void CShaderAPIVk::DisableTextureTransform(TextureStage_t textureStage) {}

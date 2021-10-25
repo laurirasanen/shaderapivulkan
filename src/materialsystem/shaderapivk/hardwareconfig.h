@@ -16,11 +16,7 @@
 #include "materialsystem/IMaterialSystemHardwareConfig.h"
 //#include "IHardwareConfigInternal.h"
 #include "bitmap/imageformat.h"
-#ifdef TF
-#include "materialsystem/imaterialsystem_81.h"
-#else
 #include "materialsystem/imaterialsystem.h"
-#endif
 
 //-----------------------------------------------------------------------------
 // Forward declarations
@@ -251,6 +247,10 @@ class CHardwareConfig : public IMaterialSystemHardwareConfig /*IHardwareConfigIn
     virtual bool FakeSRGBWrite() const { return 0; }
     virtual bool CanDoSRGBReadFromRTs() const { return 0; }
     virtual bool SupportsGLMixedSizeTargets() const { return 0; }
+
+#ifdef TF
+    virtual bool CanStretchRectFromTextures( void ) const override;
+#endif
 
   protected:
     // Members related to capabilities

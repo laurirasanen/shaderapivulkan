@@ -18,7 +18,7 @@ $Project "MaterialSystemTest"
 
 	$Folder	"Link Libraries"
 	{
-		$File	"$SRCDIR\lib\public\appframework.lib"
-		$File	"$SRCDIR\lib\public\tier2.lib"
+		$File	"$LIBPUBLIC\appframework.lib"
+		$File	"$LIBPUBLIC\tier2.lib"
 	}
 }

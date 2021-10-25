@@ -1,0 +1,82 @@
+//-----------------------------------------------------------------------------
+//	MATHLIB.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$macro SRCDIR		"..\.."
+$include "$SRCDIR\vpc_scripts\source_lib_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\$BRANCH\public;$SRCDIR\$BRANCH\public\mathlib"
+		$PreprocessorDefinitions		"$BASE;MATHLIB_LIB"
+	}
+}
+
+$Project "mathlib"
+{
+	$Folder	"Source Files"
+	{
+		$File	"color_conversion.cpp"
+		$File	"halton.cpp"
+		$File	"lightdesc.cpp"
+		$File	"mathlib_base.cpp"
+		$File	"powsse.cpp"
+		$File	"sparse_convolution_noise.cpp"
+		$File	"sseconst.cpp"
+		$File	"sse.cpp"					[$WINDOWS||$POSIX]
+		$File	"ssenoise.cpp"				
+		$File	"3dnow.cpp"					[$WINDOWS||$LINUX]
+		$File	"anorms.cpp"
+		$File	"bumpvects.cpp"
+		$File	"IceKey.cpp"
+		$File	"imagequant.cpp"
+		$File	"polyhedron.cpp"
+		$File	"quantize.cpp"
+		$File	"randsse.cpp"
+		$File	"spherical.cpp"
+		$File	"simdvectormatrix.cpp"
+		$File	"vector.cpp"
+		$File	"vmatrix.cpp"
+		$File	"almostequal.cpp"
+	}
+
+
+
+	$Folder	"Public Header Files"
+	{
+		$File	"$SRCDIR\$BRANCH\public\mathlib\anorms.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\amd3dx.h"			[$WINDOWS||$LINUX]		
+		$File	"$SRCDIR\$BRANCH\public\mathlib\bumpvects.h"		
+		$File	"$SRCDIR\$BRANCH\public\mathlib\compressed_3d_unitvec.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\compressed_light_cube.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\compressed_vector.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\halton.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\IceKey.H"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\lightdesc.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\math_pfns.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\mathlib.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\noise.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\polyhedron.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\quantize.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\simdvectormatrix.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\spherical_geometry.h"		
+		$File	"$SRCDIR\$BRANCH\public\mathlib\ssemath.h"		
+		$File	"$SRCDIR\$BRANCH\public\mathlib\ssequaternion.h"		
+		$File	"$SRCDIR\$BRANCH\public\mathlib\vector.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\vector2d.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\vector4d.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\vmatrix.h"
+		$File	"$SRCDIR\$BRANCH\public\mathlib\vplane.h"
+	}
+
+	$Folder	"Header Files"
+	{
+		$File	"noisedata.h"
+		$File	"sse.h"					[$WINDOWS||$POSIX]
+		$File	"3dnow.h"				[$WINDOWS||$LINUX]
+	}
+}

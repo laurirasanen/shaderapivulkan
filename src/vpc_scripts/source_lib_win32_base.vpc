@@ -10,8 +10,11 @@ $MacroRequired				"SRCDIR"
 $MacroRequired				"OUTLIBNAME"	"$PROJECTNAME"
 $MacroRequired				"OUTLIBDIR"
 
-$Macro LIBPUBLIC	"$SRCDIR\lib\public$PLATSUBDIR"
-$Macro LIBCOMMON	"$SRCDIR\lib\common$PLATSUBDIR"
+$Macro BRANCH		"sdk2013"
+$Macro BRANCH		"tf" [$TF]
+
+$Macro LIBPUBLIC	"$SRCDIR\$BRANCH\lib\public$PLATSUBDIR"
+$Macro LIBCOMMON	"$SRCDIR\$BRANCH\lib\common$PLATSUBDIR"
 
 $Include "$SRCDIR\vpc_scripts\source_lib_win32_debug.vpc"
 $Include "$SRCDIR\vpc_scripts\source_lib_win32_release.vpc"
